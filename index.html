@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Haskell Clicker</title>
+  <script type="text/javascript" src="haskellclicker.js"></script>
+</head>
+
+<body>
+</body>
+
+<script type="text/javascript">
+var storedState = localStorage.getItem('haskell-clicker-save');
+var startingState = storedState ? JSON.parse(storedState) : null;
+var app = Elm.Main.fullscreen(startingState);
+app.ports.setStorage.subscribe(function(state) {
+    localStorage.setItem('haskell-clicker-save', JSON.stringify(state));
+});
+</script>
+
+</html>
