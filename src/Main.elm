@@ -8,9 +8,6 @@ import Update exposing (update)
 import View exposing (view)
 
 
--- TODO: fix erroring out on inability to parse Infinity from local storage
-
-
 main : Program (Maybe Flags) Model Msg
 main =
     programWithFlags

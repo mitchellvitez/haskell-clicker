@@ -14,6 +14,10 @@
 <script type="text/javascript">
 var storedState = localStorage.getItem('haskell-clicker-save');
 var startingState = storedState ? JSON.parse(storedState) : null;
+if (startingState && !startingState.linesOfCode) {
+  localStorage.clear();
+  startingState = null;
+}
 var app = Elm.Main.fullscreen(startingState);
 app.ports.setStorage.subscribe(function(state) {
     localStorage.setItem('haskell-clicker-save', JSON.stringify(state));
