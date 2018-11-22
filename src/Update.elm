@@ -1,4 +1,4 @@
-port module Update exposing (update)
+port module Update exposing (update, updateProgrammers)
 
 import Init exposing (initialModel)
 import Json.Encode as E
@@ -25,9 +25,9 @@ update msg model =
         Click ->
             if model.canClick then
                 { model
-                    | linesOfCode = model.linesOfCode + model.programmers * round (1.05 ^ toFloat model.programmers)
+                    | linesOfCode = model.linesOfCode + updateProgrammers model.programmers
                     , manualClicks = model.manualClicks + 1
-                    , totalLines = model.totalLines + model.programmers * round (1.05 ^ toFloat model.programmers)
+                    , totalLines = model.totalLines + updateProgrammers model.programmers
                     , canClick = False
                 }
                     ! []
@@ -74,6 +74,11 @@ update msg model =
 
         ClearSaveFile ->
             initialModel ! [ setStorage (encodeModel initialModel) ]
+
+
+updateProgrammers : Int -> Int
+updateProgrammers programmers =
+    programmers * round (1.1 ^ toFloat programmers)
 
 
 updateUpgrade : String -> Upgrade -> Upgrade

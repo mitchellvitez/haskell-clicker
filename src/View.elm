@@ -1,9 +1,10 @@
 module View exposing (view)
 
-import Types exposing (..)
 import Html exposing (..)
+import Html.Attributes exposing (style, src, id, href)
 import Html.Events exposing (onClick)
-import Html.Attributes exposing (style, src, id)
+import Types exposing (..)
+import Update exposing (updateProgrammers)
 
 
 view : Model -> Html Msg
@@ -34,8 +35,8 @@ view model =
                     ++ formatNum model.programmers
                     ++ pluralize model.programmers " programmer"
                     ++ " working for you, generating "
-                    ++ formatNum (model.programmers * round (1.05 ^ toFloat model.programmers))
-                    ++ pluralize (model.programmers * round (1.05 ^ toFloat model.programmers)) " line"
+                    ++ formatNum (updateProgrammers model.programmers)
+                    ++ pluralize (updateProgrammers model.programmers) " line"
                     ++ " every time you write code."
                 )
             ]
@@ -67,6 +68,7 @@ view model =
          , p [] [ text ("Times you wrote code by hand: " ++ formatNum model.manualClicks) ]
          , p [] [ text ("Total lines of code written: " ++ formatNum model.totalLines) ]
          , p [] [ text ("Two-week sprints that have passed: " ++ formatNum (model.workdays // 10)) ]
+         , p [] [ text "Source code for this game is on ", a [ href "https://github.com/mitchellvitez/haskell-clicker" ] [ text "Github" ] ]
          , div [ style [ ( "height", "20px" ) ] ] []
          , p [ style [ ( "font-weight", "800" ) ] ] [ text "Danger Zone" ]
          , button [ onClick ClearSaveFile, style [ ( "color", "red" ), ( "border", "1px solid red" ) ] ] [ text "Delete Saved Data" ]
